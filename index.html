@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIPHER — Hip Hop Culture & Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & ROOT ─────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:   #080808;
+      --dark:    #111111;
+      --card:    #181818;
+      --border:  #2a2a2a;
+      --gold:    #F5C518;
+      --gold2:   #FFE066;
+      --red:     #E63946;
+      --white:   #F4F4F4;
+      --grey:    #888888;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-cond:    'Barlow Condensed', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── NOISE OVERLAY ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── SCROLLBAR ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* ── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 64px;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-cond);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-family: var(--font-cond);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 8px 20px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold2); }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      padding-top: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5vw 6rem 5vw;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 2px;
+      background: var(--red);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 10vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .hero-title .gold { color: var(--gold); }
+
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(60px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .hero-sub {
+      font-family: var(--font-cond);
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--grey);
+      max-width: 420px;
+      margin-top: 2rem;
+      line-height: 1.6;
+      animation: slideUp 0.9s 0.15s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      animation: slideUp 0.9s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .btn-primary {
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      padding: 14px 32px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold2);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 14px 32px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      animation: slideUp 0.9s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+    }
+
+    .stat-label {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* Hero right - featured visual */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 22vw;
+      color: rgba(245,197,24,0.04);
+      letter-spacing: -0.02em;
+      user-select: none;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)}
+    }
+
+    .hero-featured-card {
+      position: absolute;
+      bottom: 10%;
+      left: 10%;
+      right: 10%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      animation: slideUp 0.9s 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    .featured-label {
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .featured-meta {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-cond);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: rgba(245,197,24,0.12);
+      color: var(--gold);
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .tag.red { background: rgba(230,57,70,0.12); color: var(--red); }
+    .tag.white { background: rgba(255,255,255,0.06); color: var(--white); }
+
+    /* ── TICKER ────────────────────────────────────────────── */
+    .ticker {
+      background: var(--gold);
+      overflow: hidden;
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    .ticker-item {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .ticker-item::after {
+      content: '◆';
+      font-size: 0.5rem;
+    }
+
+    /* ── SECTION HEADERS ───────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0 5vw;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.06em;
+      position: relative;
+    }
+
+    .section-title .accent { color: var(--gold); }
+
+    .section-link {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .section-link:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* ── BLOG GRID ─────────────────────────────────────────── */
+    .section { padding: 6rem 5vw; }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 0 5vw; }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .blog-card:hover::before { transform: scaleX(1); }
+    .blog-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+    .card-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: rgba(245,197,24,0.08);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .card-tags { display: flex; flex-wrap: wrap; }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+    }
+
+    .card-excerpt {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--grey);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-meta {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: auto;
+    }
+
+    .card-meta .dot { color: var(--gold); }
+
+    /* FEATURED (wide) card */
+    .blog-card.wide {
+      grid-column: span 2;
+    }
+
+    .blog-card.wide .card-title {
+      font-size: 2.4rem;
+    }
+
+    /* ── CATEGORIES ────────────────────────────────────────── */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+    }
+
+    .cat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+
+    .cat-card:hover { border-color: var(--gold); }
+
+    .cat-card::after {
+      content: '→';
+      position: absolute;
+      bottom: 2rem; right: 2rem;
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s;
+    }
+
+    .cat-card:hover::after { opacity: 1; transform: translateX(0); }
+
+    .cat-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .cat-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+    }
+
+    .cat-count {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* ── MARQUEE ARTIST STRIP ──────────────────────────────── */
+    .artist-strip {
+      overflow: hidden;
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--dark);
+    }
+
+    .artist-track {
+      display: flex;
+      animation: ticker 40s linear infinite;
+      white-space: nowrap;
+    }
+
+    .artist-item {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(244,244,244,0.06);
+      padding: 0 3rem;
+      flex-shrink: 0;
+      transition: color 0.3s;
+    }
+
+    .artist-item:hover { color: var(--gold); }
+
+    .artist-item.highlight { color: rgba(245,197,24,0.15); }
+
+    /* ── ABOUT / MANIFESTO ─────────────────────────────────── */
+    .manifesto {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .manifesto-inner {
+      padding: 6rem 5vw;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .manifesto-quote {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      letter-spacing: 0.05em;
+      line-height: 1.05;
+      color: var(--white);
+    }
+
+    .manifesto-quote .gold { color: var(--gold); }
+
+    .manifesto-body {
+      font-family: var(--font-cond);
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--grey);
+      line-height: 1.7;
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── NEWSLETTER ────────────────────────────────────────── */
+    .newsletter {
+      padding: 5rem 5vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .nl-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .nl-title .gold { color: var(--gold); }
+
+    .nl-sub {
+      font-family: var(--font-cond);
+      font-size: 1rem;
+      color: var(--grey);
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+
+    .nl-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .nl-form input {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 16px 20px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .nl-form input:focus { border-color: var(--gold); }
+    .nl-form input::placeholder { color: var(--grey); }
+
+    .nl-form button {
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: none;
+      padding: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nl-form button:hover { background: var(--gold2); }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      padding: 4rem 5vw 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-cond);
+      font-size: 0.85rem;
+      color: var(--grey);
+      margin-top: 1rem;
+      line-height: 1.6;
+      max-width: 260px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .footer-links a {
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      color: var(--grey);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+    }
+
+    .footer-copy {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      color: var(--grey);
+      letter-spacing: 0.1em;
+    }
+
+    .social-links { display: flex; gap: 1rem; }
+
+    .social-links a {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      transition: all 0.2s;
+    }
+
+    .social-links a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ── MOBILE NAV MENU ───────────────────────────────────── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 64px 0 0;
+      background: var(--black);
+      z-index: 99;
+      flex-direction: column;
+      padding: 3rem 5vw;
+      gap: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .blog-grid { grid-template-columns: 1fr 1fr; }
+      .blog-card.wide { grid-column: span 2; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .newsletter { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-card.wide { grid-column: span 1; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; }
+    }
+
+    /* ── SCROLL REVEAL ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── NAVIGATION ──────────────────────────────────── -->
+  <nav>
+    <a class="nav-logo" href="#">CIPHER <span></span></a>
+    <ul class="nav-links">
+      <li><a href="#blogs">Blogs</a></li>
+      <li><a href="#categories">Beats & Culture</a></li>
+      <li><a href="#manifesto">Manifesto</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+    </ul>
+    <a class="nav-cta" href="#newsletter">Stay Plugged</a>
+    <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#blogs" onclick="toggleMenu()">Blogs</a>
+    <a href="#categories" onclick="toggleMenu()">Beats & Culture</a>
+    <a href="#manifesto" onclick="toggleMenu()">Manifesto</a>
+    <a href="#newsletter" onclick="toggleMenu()">Newsletter</a>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Est. 2025 &nbsp;·&nbsp; Culture. Music. Movement.</p>
+      <h1 class="hero-title">THE <span class="gold">CUL&shy;TURE</span> SPEAKS</h1>
+      <p class="hero-sub">Deep dives into hip hop — the rhymes, the beats, the streets, and everything in between. No filter, all real.</p>
+      <div class="hero-actions">
+        <a href="#blogs" class="btn-primary">Read the Blog</a>
+        <a href="#categories" class="btn-ghost">Explore Genres</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Articles</div>
+        </div>
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Categories</div>
+        </div>
+        <div>
+          <div class="stat-num">5K+</div>
+          <div class="stat-label">Readers</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg-text">HH</div>
+      <div class="hero-featured-card">
+        <div class="featured-label">🔥 Latest Drop</div>
+        <h2 class="featured-title">KENDRICK VS DRAKE: WHAT THE BATTLE TOLD US ABOUT HIP HOP</h2>
+        <div class="featured-meta">May 2025 &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; By Cypher Team</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TICKER ────────────────────────────────────────── -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <!-- duplicated for seamless loop -->
+      <div class="ticker-item">New Drops</div>
+      <div class="ticker-item">Artist Spotlights</div>
+      <div class="ticker-item">Beat Breakdowns</div>
+      <div class="ticker-item">Street Fashion</div>
+      <div class="ticker-item">Lyric Analysis</div>
+      <div class="ticker-item">Underground Scene</div>
+      <div class="ticker-item">Freestyles</div>
+      <div class="ticker-item">Golden Era</div>
+      <div class="ticker-item">Trap Talk</div>
+      <div class="ticker-item">Drill Chronicles</div>
+      <div class="ticker-item">New Drops</div>
+      <div class="ticker-item">Artist Spotlights</div>
+      <div class="ticker-item">Beat Breakdowns</div>
+      <div class="ticker-item">Street Fashion</div>
+      <div class="ticker-item">Lyric Analysis</div>
+      <div class="ticker-item">Underground Scene</div>
+      <div class="ticker-item">Freestyles</div>
+      <div class="ticker-item">Golden Era</div>
+      <div class="ticker-item">Trap Talk</div>
+      <div class="ticker-item">Drill Chronicles</div>
+    </div>
+  </div>
+
+  <!-- ── BLOG POSTS ─────────────────────────────────────── -->
+  <section class="section" id="blogs">
+    <div class="section-header reveal">
+      <h2 class="section-title">LATEST <span class="accent">DROPS</span></h2>
+      <a href="#" class="section-link">All Articles →</a>
+    </div>
+
+    <div class="blog-grid">
+
+      <a class="blog-card wide reveal" href="#">
+        <div class="card-num">01</div>
+        <div class="card-tags">
+          <span class="tag">🔥 Featured</span>
+          <span class="tag red">Rap Analysis</span>
+        </div>
+        <h3 class="card-title">THE LYRICAL GENIUS OF KENDRICK LAMAR — BREAKING DOWN "NOT LIKE US"</h3>
+        <p class="card-excerpt">From the wordplay to the cadence — we dissect every bar of the track that shook the rap world. Kendrick doesn't just rap; he architects entire wars with syllables. Here's what most people missed.</p>
+        <div class="card-meta">
+          <span>June 2, 2025</span>
+          <span class="dot">◆</span>
+          <span>12 min read</span>
+          <span class="dot">◆</span>
+          <span>Cipher Team</span>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">02</div>
+        <div class="card-tags">
+          <span class="tag white">Beats</span>
+        </div>
+        <h3 class="card-title">HOW METRO BOOMIN REINVENTED TRAP PRODUCTION</h3>
+        <p class="card-excerpt">The architecture of modern trap — 808s, hi-hats, and the spaces in between that make you feel it in your chest.</p>
+        <div class="card-meta">
+          <span>May 28, 2025</span>
+          <span class="dot">◆</span>
+          <span>9 min read</span>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">03</div>
+        <div class="card-tags">
+          <span class="tag red">Fashion</span>
+        </div>
+        <h3 class="card-title">HIP HOP & HIGH FASHION: FROM ADIDAS TO LOUIS VUITTON</h3>
+        <p class="card-excerpt">The 50-year journey from Bronx streetwear to Paris runways — how rap redefined luxury for a generation.</p>
+        <div class="card-meta">
+          <span>May 22, 2025</span>
+          <span class="dot">◆</span>
+          <span>7 min read</span>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">04</div>
+        <div class="card-tags">
+          <span class="tag white">History</span>
+        </div>
+        <h3 class="card-title">THE BRONX, 1973 — WHERE IT ALL STARTED WITH DJ KOOL HERC</h3>
+        <p class="card-excerpt">A broken-down block party in the South Bronx gave birth to the biggest cultural movement in modern history.</p>
+        <div class="card-meta">
+          <span>May 18, 2025</span>
+          <span class="dot">◆</span>
+          <span>10 min read</span>
+        </div>
+      </a>
+
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">05</div>
+        <div class="card-tags">
+          <span class="tag">Underground</span>
+        </div>
+        <h3 class="card-title">INDIA'S HIP HOP SCENE: THE ARTISTS YOU NEED TO KNOW IN 2025</h3>
+        <p class="card-excerpt">From Mumbai to Delhi to Chennai — the desi rap scene is no longer underground. It's the main stage.</p>
+        <div class="card-meta">
+          <span>May 14, 2025</span>
+          <span class="dot">◆</span>
+          <span>8 min read</span>
+        </div>
+      </a>
+
+      <a class="blog-card wide reveal" href="#">
+        <div class="card-num">06</div>
+        <div class="card-tags">
+          <span class="tag red">Opinion</span>
+          <span class="tag white">Culture</span>
+        </div>
+        <h3 class="card-title">IS AI GOING TO REPLACE RAPPERS? THE REAL ANSWER IS MORE COMPLICATED</h3>
+        <p class="card-excerpt">Every generation fears a new technology will kill music. They've always been wrong — and they're wrong again. But here's the nuanced reality of what AI actually means for hip hop's future, the culture, and your favourite artists.</p>
+        <div class="card-meta">
+          <span>May 10, 2025</span>
+          <span class="dot">◆</span>
+          <span>15 min read</span>
+          <span class="dot">◆</span>
+          <span>Cipher Team</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── ARTIST MARQUEE ─────────────────────────────────── -->
+  <div class="artist-strip">
+    <div class="artist-track">
+      <div class="artist-item">Tupac</div>
+      <div class="artist-item highlight">Biggie</div>
+      <div class="artist-item">Jay-Z</div>
+      <div class="artist-item">Nas</div>
+      <div class="artist-item highlight">Kendrick</div>
+      <div class="artist-item">Drake</div>
+      <div class="artist-item">J. Cole</div>
+      <div class="artist-item highlight">Eminem</div>
+      <div class="artist-item">Lil Wayne</div>
+      <div class="artist-item">Travis Scott</div>
+      <div class="artist-item highlight">Tyler</div>
+      <div class="artist-item">Pusha T</div>
+      <!-- dupe for seamless scroll -->
+      <div class="artist-item">Tupac</div>
+      <div class="artist-item highlight">Biggie</div>
+      <div class="artist-item">Jay-Z</div>
+      <div class="artist-item">Nas</div>
+      <div class="artist-item highlight">Kendrick</div>
+      <div class="artist-item">Drake</div>
+      <div class="artist-item">J. Cole</div>
+      <div class="artist-item highlight">Eminem</div>
+      <div class="artist-item">Lil Wayne</div>
+      <div class="artist-item">Travis Scott</div>
+      <div class="artist-item highlight">Tyler</div>
+      <div class="artist-item">Pusha T</div>
+    </div>
+  </div>
+
+  <!-- ── CATEGORIES ─────────────────────────────────────── -->
+  <section class="section" id="categories">
+    <div class="section-header reveal">
+      <h2 class="section-title">EXPLORE <span class="accent">TOPICS</span></h2>
+    </div>
+    <div class="categories-grid">
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🎤</div>
+        <div class="cat-name">RAP & LYRICS</div>
+        <div class="cat-count">18 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🎹</div>
+        <div class="cat-name">BEATS & PRODUCTION</div>
+        <div class="cat-count">12 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">👟</div>
+        <div class="cat-name">STREET FASHION</div>
+        <div class="cat-count">9 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🏙️</div>
+        <div class="cat-name">CULTURE & HISTORY</div>
+        <div class="cat-count">14 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🌏</div>
+        <div class="cat-name">DESI HIP HOP</div>
+        <div class="cat-count">7 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🎬</div>
+        <div class="cat-name">HIP HOP & FILM</div>
+        <div class="cat-count">6 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">💿</div>
+        <div class="cat-name">ALBUM REVIEWS</div>
+        <div class="cat-count">22 Articles</div>
+      </a>
+      <a class="cat-card reveal" href="#">
+        <div class="cat-icon">🔥</div>
+        <div class="cat-name">BEEF & BATTLES</div>
+        <div class="cat-count">11 Articles</div>
+      </a>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- ── MANIFESTO ──────────────────────────────────────── -->
+  <section class="manifesto" id="manifesto">
+    <div class="manifesto-inner reveal">
+      <h2 class="manifesto-quote">"HIP HOP IS NOT A <span class="gold">GENRE</span>. IT'S A LANGUAGE."</h2>
+      <p class="manifesto-body">
+        CIPHER was born because hip hop deserves more than charts and streams. It deserves analysis, context, and respect.
+        We document the culture — the raw, the polished, the underground, the mainstream. From the Bronx to Bombay.
+        Real talk, no fluff. The cipher never closes.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── NEWSLETTER ─────────────────────────────────────── -->
+  <section class="section" id="newsletter">
+    <div class="newsletter reveal">
+      <div>
+        <h2 class="nl-title">DON'T MISS A <span class="gold">SINGLE</span> DROP.</h2>
+        <p class="nl-sub">Weekly dispatches straight from the cipher — the best articles, artist spotlights, and culture news. No spam. Unsubscribe anytime.</p>
+      </div>
+      <div class="nl-form">
+        <input type="text" placeholder="Your Name" />
+        <input type="email" placeholder="Your Email Address" />
+        <button type="button" onclick="handleSubscribe()">Join the Cipher →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <a class="footer-logo" href="#">CIPHER</a>
+        <p class="footer-tagline">Hip hop culture, raw and unfiltered. From the block to the blog — the cipher never closes.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Topics</p>
+        <ul class="footer-links">
+          <li><a href="#">Rap & Lyrics</a></li>
+          <li><a href="#">Beats & Production</a></li>
+          <li><a href="#">Street Fashion</a></li>
+          <li><a href="#">Desi Hip Hop</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Explore</p>
+        <ul class="footer-links">
+          <li><a href="#">Latest Articles</a></li>
+          <li><a href="#">Album Reviews</a></li>
+          <li><a href="#">Artist Spotlights</a></li>
+          <li><a href="#">About CIPHER</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Connect</p>
+        <ul class="footer-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 CIPHER. Built with culture. Powered by the block.</p>
+      <div class="social-links">
+        <a href="#">IG</a>
+        <a href="#">X</a>
+        <a href="#">YT</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ────────────────────────────────────────── -->
+  <script>
+    // Mobile menu toggle
+    function toggleMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('open');
+    }
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80 * (Array.from(entry.target.parentNode?.children || []).indexOf(entry.target)));
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Newsletter handler
+    function handleSubscribe() {
+      const inputs = document.querySelectorAll('.nl-form input');
+      const name = inputs[0].value.trim();
+      const email = inputs[1].value.trim();
+      if (!name || !email) {
+        alert('Drop your name and email to join the cipher!');
+        return;
+      }
+      alert(`🔥 Welcome to the Cipher, ${name}! You'll hear from us soon.`);
+      inputs[0].value = '';
+      inputs[1].value = '';
+    }
+
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      nav.style.borderBottomColor = window.scrollY > 50 ? 'var(--gold)' : 'var(--border)';
+    });
+  </script>
+
+</body>
+</html>
