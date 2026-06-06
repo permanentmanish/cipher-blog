@@ -1,1 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEBAAK — India Ka Hip Hop</title>
+  <meta name="description" content="BEBAAK — India's first dedicated Desi Hip Hop blog. Gully rap, IHH, DHH, artist spotlights, beat breakdowns and more. Desi. Raw. Bebaak." />
+  <meta property="og:title" content="BEBAAK — India Ka Hip Hop" />
+  <meta property="og:description" content="India's most raw and unfiltered Desi Hip Hop blog. IHH. DHH. Culture. No filter." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Tiro+Devanagari+Hindi&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:    #070707;
+      --dark:     #0f0f0f;
+      --card:     #161616;
+      --border:   #252525;
+      --saffron:  #FF6B1A;
+      --saffron2: #FF8C42;
+      --green:    #138808;
+      --white:    #F2F2F2;
+      --grey:     #777777;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-cond:    'Barlow Condensed', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-deva:    'Tiro Devanagari Hindi', serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); overflow-x: hidden; }
 
+    /* grain */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--saffron); }
+
+    /* ── READING PROGRESS BAR ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: var(--saffron); width: 0%;
+      z-index: 9998; transition: width 0.1s linear;
+    }
+
+    /* ── BACK TO TOP ── */
+    #back-to-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 44px; height: 44px;
+      background: var(--saffron); color: var(--black);
+      font-size: 1.2rem; font-weight: 700;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 500; font-family: var(--font-display);
+      letter-spacing: 0.05em;
+    }
+    #back-to-top.visible { opacity: 1; transform: translateY(0); }
+    #back-to-top:hover { background: var(--saffron2); }
+
+    /* ── COOKIE BAR ── */
+    #cookie-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #111; border-top: 1px solid var(--border);
+      padding: 1rem 5vw;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+      z-index: 600; flex-wrap: wrap;
+    }
+    #cookie-bar p {
+      font-family: var(--font-cond); font-size: 0.8rem;
+      color: var(--grey); letter-spacing: 0.05em; flex: 1;
+    }
+    #cookie-bar p span { color: var(--saffron); }
+    #cookie-accept {
+      font-family: var(--font-cond); font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--black); background: var(--saffron);
+      border: none; padding: 8px 20px; cursor: pointer; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    #cookie-accept:hover { background: var(--saffron2); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 60px;
+      background: rgba(7,7,7,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 1.9rem;
+      letter-spacing: 0.14em; color: var(--saffron);
+      text-decoration: none; display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-badge {
+      font-family: var(--font-cond); font-size: 0.55rem;
+      font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--black); background: var(--saffron);
+      padding: 3px 7px; line-height: 1.4;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-cond); font-size: 0.88rem;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--grey); text-decoration: none; transition: color 0.2s;
+      position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1px; background: var(--saffron);
+      transform: scaleX(0); transition: transform 0.25s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--saffron); }
+    .nav-links a.active::after, .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-search-btn {
+      background: none; border: 1px solid var(--border);
+      color: var(--grey); width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: all 0.2s;
+    }
+    .nav-search-btn:hover { border-color: var(--saffron); color: var(--saffron); }
+    .nav-cta {
+      font-family: var(--font-cond); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--black); background: var(--saffron);
+      padding: 8px 20px; text-decoration: none; transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--saffron2); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+    /* Search overlay */
+    #search-overlay {
+      position: fixed; inset: 0; background: rgba(7,7,7,0.97);
+      z-index: 200; display: none; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+    }
+    #search-overlay.open { display: flex; }
+    #search-overlay input {
+      width: min(600px, 90vw); background: var(--card);
+      border: 1px solid var(--saffron); color: var(--white);
+      font-family: var(--font-display); font-size: 2rem;
+      letter-spacing: 0.05em; padding: 1rem 1.5rem; outline: none;
+    }
+    #search-overlay input::placeholder { color: rgba(255,255,255,0.2); }
+    .search-close {
+      position: absolute; top: 1.5rem; right: 5vw;
+      font-family: var(--font-display); font-size: 2rem; color: var(--grey);
+      cursor: pointer; background: none; border: none; transition: color 0.2s;
+    }
+    .search-close:hover { color: var(--saffron); }
+    .search-hint {
+      font-family: var(--font-cond); font-size: 0.8rem;
+      color: var(--grey); letter-spacing: 0.15em; text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; padding-top: 60px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute;
+      top: 0; bottom: 0; left: 50%; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--saffron), transparent);
+      opacity: 0.18;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4vw 6rem 5vw; position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-family: var(--font-cond); font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--saffron); margin-bottom: 1.4rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 2px; background: var(--saffron);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 9vw, 9.5rem);
+      line-height: 0.86; letter-spacing: 0.03em; color: var(--white);
+      animation: riseUp 1s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-title .saffron { color: var(--saffron); }
+    .hero-devanagari {
+      font-family: var(--font-deva);
+      font-size: clamp(1.1rem, 2vw, 1.8rem);
+      color: rgba(255,107,26,0.32); margin-top: 0.6rem;
+      letter-spacing: 0.05em;
+      animation: riseUp 1s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes riseUp {
+      from { opacity:0; transform:translateY(50px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .hero-sub {
+      font-family: var(--font-body); font-size: 0.92rem;
+      font-weight: 300; color: var(--grey); max-width: 400px;
+      margin-top: 1.8rem; line-height: 1.7;
+      animation: riseUp 1s 0.18s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; margin-top: 2.5rem;
+      animation: riseUp 1s 0.26s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .btn-primary {
+      font-family: var(--font-cond); font-size: 0.85rem;
+      font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--black); background: var(--saffron);
+      padding: 13px 30px; text-decoration: none;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--saffron2); transform: translateY(-2px); }
+    .btn-ghost {
+      font-family: var(--font-cond); font-size: 0.85rem;
+      font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--white); border: 1px solid var(--border);
+      padding: 13px 30px; text-decoration: none;
+      transition: all 0.2s; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--saffron); color: var(--saffron); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      animation: riseUp 1s 0.34s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .stat-num { font-family: var(--font-display); font-size: 2.2rem; color: var(--saffron); letter-spacing: 0.04em; }
+    .stat-label { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+
+    /* Hero Right */
+    .hero-right { position: relative; overflow: hidden; background: #0a0a0a; }
+    .hero-bg-text {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 18vw;
+      color: rgba(255,107,26,0.04); letter-spacing: -0.02em; user-select: none;
+      animation: floatAnim 7s ease-in-out infinite;
+    }
+    @keyframes floatAnim {
+      0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-18px) rotate(2deg)}
+    }
+    .hero-map-label {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-cond); font-size: 0.65rem;
+      font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--saffron); opacity: 0.7;
+    }
+    .city-dot {
+      position: absolute; width: 6px; height: 6px;
+      background: var(--saffron); border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .city-dot::after {
+      content: attr(data-city); position: absolute;
+      left: 14px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-cond); font-size: 0.62rem;
+      font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--grey); white-space: nowrap;
+    }
+    @keyframes pulse-dot {
+      0%,100%{ box-shadow: 0 0 0 0 rgba(255,107,26,0.5); }
+      50%{ box-shadow: 0 0 0 8px rgba(255,107,26,0); }
+    }
+    .hero-featured-card {
+      position: absolute; bottom: 8%; left: 8%; right: 8%;
+      background: rgba(22,22,22,0.96); border: 1px solid var(--border);
+      border-left: 3px solid var(--saffron); padding: 1.8rem 2rem;
+      animation: riseUp 1s 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .featured-label {
+      font-family: var(--font-cond); font-size: 0.65rem;
+      font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--saffron); margin-bottom: 0.7rem;
+    }
+    .featured-title {
+      font-family: var(--font-display); font-size: 1.8rem;
+      letter-spacing: 0.04em; line-height: 1.02; margin-bottom: 0.7rem;
+    }
+    .featured-meta { font-family: var(--font-cond); font-size: 0.75rem; color: var(--grey); letter-spacing: 0.08em; }
+
+    /* ── TAGS ── */
+    .tag {
+      display: inline-block; font-family: var(--font-cond);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; padding: 4px 10px;
+      background: rgba(255,107,26,0.1); color: var(--saffron);
+      margin-right: 6px; margin-bottom: 6px;
+    }
+    .tag.green  { background: rgba(19,136,8,0.12); color: #2ecc71; }
+    .tag.white  { background: rgba(255,255,255,0.06); color: var(--grey); }
+    .tag.new    { background: var(--saffron); color: var(--black); animation: pulseBadge 2s ease infinite; }
+    @keyframes pulseBadge { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+    /* ── TICKER ── */
+    .ticker { background: var(--saffron); overflow: hidden; height: 38px; display: flex; align-items: center; }
+    .ticker-track { display: flex; animation: runTicker 28s linear infinite; white-space: nowrap; }
+    @keyframes runTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .ticker-item {
+      font-family: var(--font-cond); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--black);
+      padding: 0 2rem; display: flex; align-items: center; gap: 1.5rem;
+    }
+    .ticker-item::after { content: '◆'; font-size: 0.45rem; }
+
+    /* ── TRENDING STRIP ── */
+    .trending-strip {
+      padding: 2rem 5vw; background: var(--dark);
+      border-bottom: 1px solid var(--border);
+    }
+    .trending-label {
+      font-family: var(--font-cond); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--saffron); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .trending-label::before { content: '🔥'; }
+    .trending-scroll {
+      display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem;
+      scrollbar-width: thin; scrollbar-color: var(--saffron) var(--dark);
+    }
+    .trending-scroll::-webkit-scrollbar { height: 2px; }
+    .trending-scroll::-webkit-scrollbar-thumb { background: var(--saffron); }
+    .trending-card {
+      flex-shrink: 0; background: var(--card);
+      border: 1px solid var(--border); border-top: 2px solid var(--saffron);
+      padding: 1rem 1.2rem; width: 220px;
+      text-decoration: none; color: inherit; transition: border-color 0.2s;
+    }
+    .trending-card:hover { border-color: var(--saffron); }
+    .trending-num {
+      font-family: var(--font-display); font-size: 2rem;
+      color: rgba(255,107,26,0.15); letter-spacing: 0.04em; line-height: 1;
+    }
+    .trending-title {
+      font-family: var(--font-cond); font-size: 0.9rem; font-weight: 600;
+      letter-spacing: 0.04em; line-height: 1.3; margin-top: 0.5rem;
+      color: var(--white);
+    }
+    .trending-meta { font-family: var(--font-cond); font-size: 0.68rem; color: var(--grey); margin-top: 0.4rem; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 5.5rem 5vw; }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 0 5vw; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2.5rem; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 3.8rem); letter-spacing: 0.06em; }
+    .section-title .saffron { color: var(--saffron); }
+    .section-sub { font-family: var(--font-cond); font-size: 0.78rem; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.3rem; }
+    .section-link {
+      font-family: var(--font-cond); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey);
+      text-decoration: none; border-bottom: 1px solid var(--border);
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .section-link:hover { color: var(--saffron); border-color: var(--saffron); }
+
+    /* ── BLOG GRID ── */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); }
+    .blog-card {
+      background: var(--card); padding: 2rem; position: relative;
+      overflow: hidden; cursor: pointer;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      text-decoration: none; color: inherit; transition: transform 0.25s;
+    }
+    .blog-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--saffron); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .blog-card:hover::before { transform: scaleX(1); }
+    .blog-card:hover { transform: translateY(-3px); z-index: 2; }
+
+    /* Read overlay on hover */
+    .card-read-overlay {
+      position: absolute; inset: 0; background: rgba(255,107,26,0.04);
+      display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: 1.2rem; opacity: 0; transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .blog-card:hover .card-read-overlay { opacity: 1; }
+    .card-read-label {
+      font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--saffron); border: 1px solid var(--saffron);
+      padding: 5px 12px;
+    }
+
+    .card-num { font-family: var(--font-display); font-size: 3.5rem; color: rgba(255,107,26,0.06); position: absolute; top: 1rem; right: 1.2rem; line-height: 1; }
+    .card-tags { display: flex; flex-wrap: wrap; }
+    .card-title { font-family: var(--font-display); font-size: 1.55rem; letter-spacing: 0.03em; line-height: 1.05; }
+    .card-excerpt { font-size: 0.82rem; color: var(--grey); line-height: 1.65; flex: 1; }
+    .card-meta {
+      font-family: var(--font-cond); font-size: 0.72rem; color: var(--grey);
+      letter-spacing: 0.1em; display: flex; align-items: center; gap: 0.8rem;
+      border-top: 1px solid var(--border); padding-top: 0.9rem; margin-top: auto;
+    }
+    .card-meta .dot { color: var(--saffron); }
+    .blog-card.wide { grid-column: span 2; }
+    .blog-card.wide .card-title { font-size: 2.1rem; }
+
+    /* ── INTERNATIONAL ── */
+    .intl-strip { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .intl-inner { padding: 4rem 5vw; display: grid; grid-template-columns: 260px 1fr; gap: 4rem; align-items: start; }
+    .intl-label { position: sticky; top: 80px; }
+    .intl-tag {
+      font-family: var(--font-cond); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--grey); border: 1px solid var(--border);
+      padding: 5px 12px; display: inline-block; margin-bottom: 1.2rem;
+    }
+    .intl-heading { font-family: var(--font-display); font-size: 3rem; letter-spacing: 0.06em; line-height: 1; color: rgba(255,255,255,0.12); }
+    .intl-desc { font-size: 0.8rem; color: var(--grey); line-height: 1.65; margin-top: 1rem; }
+    .intl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .intl-card { background: var(--card); padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.6rem; transition: background 0.2s; }
+    .intl-card:hover { background: #1c1c1c; }
+    .intl-card-title { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.04em; line-height: 1.1; }
+    .intl-card-meta { font-family: var(--font-cond); font-size: 0.7rem; color: var(--grey); letter-spacing: 0.1em; }
+
+    /* ── CATEGORIES ── */
+    .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); }
+    .cat-card {
+      background: var(--card); padding: 2.2rem 1.8rem;
+      display: flex; flex-direction: column; gap: 0.8rem;
+      text-decoration: none; color: inherit; cursor: pointer;
+      position: relative; overflow: hidden; transition: background 0.2s;
+    }
+    .cat-card:hover { background: #1a1a1a; }
+    .cat-card::after {
+      content: '→'; position: absolute; bottom: 1.8rem; right: 1.8rem;
+      font-size: 1.1rem; color: var(--saffron); opacity: 0;
+      transform: translateX(-8px); transition: all 0.3s;
+    }
+    .cat-card:hover::after { opacity: 1; transform: translateX(0); }
+    .cat-icon { font-size: 1.8rem; line-height: 1; }
+    .cat-name { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.05em; line-height: 1.05; }
+    .cat-count { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+    .cat-card.featured-cat { background: rgba(255,107,26,0.05); border-left: 2px solid var(--saffron); }
+
+    /* ── ARTIST MARQUEE ── */
+    .artist-strip { overflow: hidden; padding: 2.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .artist-track { display: flex; animation: runTicker 45s linear infinite; white-space: nowrap; }
+    .artist-item {
+      font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.5rem);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(244,244,244,0.05); padding: 0 2.5rem;
+      flex-shrink: 0; transition: color 0.3s; cursor: default;
+    }
+    .artist-item:hover { color: var(--saffron); }
+    .artist-item.hi { color: rgba(255,107,26,0.12); }
+
+    /* ── MANIFESTO ── */
+    .manifesto { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .manifesto-inner { padding: 6rem 5vw; max-width: 900px; margin: 0 auto; text-align: center; }
+    .manifesto-hindi { font-family: var(--font-deva); font-size: clamp(1rem, 2vw, 1.3rem); color: rgba(255,107,26,0.35); letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+    .manifesto-quote { font-family: var(--font-display); font-size: clamp(2.2rem, 4.5vw, 4.5rem); letter-spacing: 0.05em; line-height: 1.05; color: var(--white); }
+    .manifesto-quote .saffron { color: var(--saffron); }
+    .manifesto-body { font-family: var(--font-cond); font-size: 1.05rem; font-weight: 300; color: var(--grey); line-height: 1.75; margin-top: 2rem; max-width: 580px; margin-left: auto; margin-right: auto; }
+    .manifesto-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+    .pill { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron); border: 1px solid rgba(255,107,26,0.3); padding: 6px 14px; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { padding: 5rem 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .nl-title { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 4rem); letter-spacing: 0.05em; line-height: 1; }
+    .nl-title .saffron { color: var(--saffron); }
+    .nl-sub { font-size: 0.88rem; color: var(--grey); margin-top: 1rem; line-height: 1.65; }
+    .nl-form { display: flex; flex-direction: column; gap: 0.9rem; }
+    .nl-form input { background: var(--card); border: 1px solid var(--border); color: var(--white); font-family: var(--font-body); font-size: 0.9rem; padding: 14px 18px; outline: none; transition: border-color 0.2s; width: 100%; }
+    .nl-form input:focus { border-color: var(--saffron); }
+    .nl-form input::placeholder { color: var(--grey); }
+    .nl-form button { font-family: var(--font-cond); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--black); background: var(--saffron); border: none; padding: 15px; cursor: pointer; transition: background 0.2s; }
+    .nl-form button:hover { background: var(--saffron2); }
+    .nl-note { font-family: var(--font-cond); font-size: 0.68rem; color: var(--grey); letter-spacing: 0.1em; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 4rem 5vw 2rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .footer-logo { font-family: var(--font-display); font-size: 2.5rem; color: var(--saffron); letter-spacing: 0.12em; text-decoration: none; }
+    .footer-tagline { font-size: 0.82rem; color: var(--grey); margin-top: 0.8rem; line-height: 1.65; max-width: 250px; }
+    .footer-flag { display: flex; align-items: center; gap: 6px; margin-top: 1.2rem; }
+    .flag-stripe { height: 12px; width: 36px; background: linear-gradient(to right, #FF6B1A 33%, #fff 33% 66%, #138808 66%); border-radius: 1px; }
+    .footer-flag-text { font-family: var(--font-cond); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); }
+    .footer-col-title { font-family: var(--font-cond); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron); margin-bottom: 1.4rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+    .footer-links a { font-family: var(--font-cond); font-size: 0.88rem; color: var(--grey); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 1.8rem; }
+    .footer-copy { font-family: var(--font-cond); font-size: 0.75rem; color: var(--grey); letter-spacing: 0.08em; }
+    .social-links { display: flex; gap: 0.8rem; }
+    .social-links a { font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); text-decoration: none; border: 1px solid var(--border); padding: 6px 12px; transition: all 0.2s; }
+    .social-links a:hover { color: var(--saffron); border-color: var(--saffron); }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu { display: none; position: fixed; inset: 60px 0 0; background: var(--black); z-index: 99; flex-direction: column; padding: 3rem 5vw; gap: 1.5rem; border-top: 1px solid var(--border); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 0.06em; color: var(--white); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--saffron); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .blog-grid { grid-template-columns: 1fr 1fr; }
+      .blog-card.wide { grid-column: span 2; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .intl-inner { grid-template-columns: 1fr; }
+      .intl-label { position: static; }
+      .intl-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .newsletter { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta, .nav-search-btn { display: none; }
+      .hamburger { display: flex; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-card.wide { grid-column: span 1; }
+      .categories-grid { grid-template-columns: 1fr 1fr; }
+      .intl-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROGRESS BAR -->
+  <div id="progress-bar"></div>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+  <!-- COOKIE NOTICE -->
+  <div id="cookie-bar">
+    <p>🍪 BEBAAK uses cookies to improve your experience. <span>Desi data, desi rules.</span></p>
+    <button id="cookie-accept" onclick="document.getElementById('cookie-bar').style.display='none'">Got It</button>
+  </div>
+
+  <!-- SEARCH OVERLAY -->
+  <div id="search-overlay">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+    <input type="text" placeholder="Kya dhundh rahe ho?" id="searchInput" />
+    <p class="search-hint">Try: MC Stan · Gully Rap · Album Review · Delhi Scene</p>
+  </div>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a class="nav-logo" href="#">BEBAAK <span class="nav-logo-badge">IHH · DHH</span></a>
+    <ul class="nav-links">
+      <li><a href="#blogs" data-section="blogs">Blogs</a></li>
+      <li><a href="#categories" data-section="categories">Topics</a></li>
+      <li><a href="#international" data-section="international">International</a></li>
+      <li><a href="#manifesto" data-section="manifesto">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="nav-search-btn" onclick="openSearch()" aria-label="Search">🔍</button>
+      <a class="nav-cta" href="#newsletter">Subscribe</a>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#blogs" onclick="toggleMenu()">Blogs</a>
+    <a href="#categories" onclick="toggleMenu()">Topics</a>
+    <a href="#international" onclick="toggleMenu()">International</a>
+    <a href="#newsletter" onclick="toggleMenu()">Subscribe</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <p class="hero-eyebrow">India Ka Hip Hop · Since 2025</p>
+      <h1 class="hero-title">DESI.<br><span class="saffron">RAW.</span><br>BEBAAK.</h1>
+      <p class="hero-devanagari">बेबाक — बिना किसी डर के।</p>
+      <p class="hero-sub">India ka pehla dedicated IHH/DHH blog. Gully rap se leke Punjabi trap tak — har beat ki kahani yahan milegi. No filter. No compromise.</p>
+      <div class="hero-actions">
+        <a href="#blogs" class="btn-primary">Padho Abhi</a>
+        <a href="#categories" class="btn-ghost">Explore Topics</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">50+</div><div class="stat-label">Articles</div></div>
+        <div><div class="stat-num">10+</div><div class="stat-label">Cities Covered</div></div>
+        <div><div class="stat-num">IHH</div><div class="stat-label">First Focus</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg-text">IHH</div>
+      <p class="hero-map-label">India Ka Hip Hop Map</p>
+      <div class="city-dot" style="top:28%;left:42%;" data-city="Mumbai"></div>
+      <div class="city-dot" style="top:18%;left:55%;" data-city="Delhi"></div>
+      <div class="city-dot" style="top:15%;left:45%;" data-city="Punjab"></div>
+      <div class="city-dot" style="top:65%;left:50%;" data-city="Chennai"></div>
+      <div class="city-dot" style="top:55%;left:58%;" data-city="Hyderabad"></div>
+      <div class="city-dot" style="top:45%;left:65%;" data-city="Kolkata"></div>
+      <div class="hero-featured-card">
+        <div class="featured-label">🔥 Latest Drop</div>
+        <h2 class="featured-title">HANUMANKIND'S "BIG DAWGS" — HOW A DESI TRACK WENT GLOBAL</h2>
+        <div class="featured-meta">June 2025 · 9 min read · IHH Special</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <div class="ticker-item">Gully Rap</div><div class="ticker-item">MC Stan</div>
+      <div class="ticker-item">Seedhe Maut</div><div class="ticker-item">DIVINE</div>
+      <div class="ticker-item">Raftaar</div><div class="ticker-item">Mumbai Underground</div>
+      <div class="ticker-item">Delhi Scene</div><div class="ticker-item">Punjabi Trap</div>
+      <div class="ticker-item">Desi Beats</div><div class="ticker-item">EPR</div>
+      <div class="ticker-item">Prabh Deep</div><div class="ticker-item">IHH Rising</div>
+      <div class="ticker-item">Gully Rap</div><div class="ticker-item">MC Stan</div>
+      <div class="ticker-item">Seedhe Maut</div><div class="ticker-item">DIVINE</div>
+      <div class="ticker-item">Raftaar</div><div class="ticker-item">Mumbai Underground</div>
+      <div class="ticker-item">Delhi Scene</div><div class="ticker-item">Punjabi Trap</div>
+      <div class="ticker-item">Desi Beats</div><div class="ticker-item">EPR</div>
+      <div class="ticker-item">Prabh Deep</div><div class="ticker-item">IHH Rising</div>
+    </div>
+  </div>
+
+  <!-- TRENDING STRIP (NEW ADDITION) -->
+  <div class="trending-strip">
+    <p class="trending-label">Trending This Week</p>
+    <div class="trending-scroll">
+      <a class="trending-card" href="#">
+        <div class="trending-num">01</div>
+        <div class="trending-title">HANUMANKIND "BIG DAWGS" GOES GLOBAL</div>
+        <div class="trending-meta">12.4K reads · IHH</div>
+      </a>
+      <a class="trending-card" href="#">
+        <div class="trending-num">02</div>
+        <div class="trending-title">MC STAN KA NEW ALBUM: PEHLI JHAAK</div>
+        <div class="trending-meta">9.8K reads · Gully Rap</div>
+      </a>
+      <a class="trending-card" href="#">
+        <div class="trending-num">03</div>
+        <div class="trending-title">SEEDHE MAUT TOUR 2025: DATES AND CITIES</div>
+        <div class="trending-meta">8.2K reads · News</div>
+      </a>
+      <a class="trending-card" href="#">
+        <div class="trending-num">04</div>
+        <div class="trending-title">EPR: PUNJAB KA MOST UNDERRATED RAPPER</div>
+        <div class="trending-meta">7.1K reads · Underground</div>
+      </a>
+      <a class="trending-card" href="#">
+        <div class="trending-num">05</div>
+        <div class="trending-title">DESI BEATS: TOP PRODUCERS OF 2025</div>
+        <div class="trending-meta">5.9K reads · Production</div>
+      </a>
+      <a class="trending-card" href="#">
+        <div class="trending-num">06</div>
+        <div class="trending-title">DIVINE KA NEW COLLAB — DETAILS INSIDE</div>
+        <div class="trending-meta">5.3K reads · Mumbai</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- BLOGS -->
+  <section class="section" id="blogs">
+    <div class="section-header reveal">
+      <div>
+        <h2 class="section-title">DESI <span class="saffron">DROPS</span></h2>
+        <p class="section-sub">Indian &amp; Desi Hip Hop — Our Main Stage</p>
+      </div>
+      <a href="#" class="section-link">Sab Articles →</a>
+    </div>
+    <div class="blog-grid">
+      <a class="blog-card wide reveal" href="#">
+        <div class="card-num">01</div>
+        <div class="card-tags">
+          <span class="tag new">NEW</span>
+          <span class="tag">🔥 Featured</span>
+          <span class="tag green">IHH Rising</span>
+        </div>
+        <h3 class="card-title">HANUMANKIND'S "BIG DAWGS" NE DUNIYA KO KAISE HILAYA — EK COMPLETE BREAKDOWN</h3>
+        <p class="card-excerpt">Ek Kerala ka rapper jo pehle kisi ko nahi pata tha — phir ek track ne sab badal diya. Billboard charts, international tours, aur ek pure desi flow. Hum samjhate hain kaise "Big Dawgs" sirf ek song nahi, IHH ka turning point tha.</p>
+        <div class="card-meta">
+          <span>June 3, 2025</span><span class="dot">◆</span>
+          <span>10 min read</span><span class="dot">◆</span><span>Bebaak Team</span>
+        </div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">02</div>
+        <div class="card-tags"><span class="tag new">NEW</span><span class="tag">MC Stan</span></div>
+        <h3 class="card-title">MC STAN: BIGG BOSS SE IHH KA BIGGEST STAR TAK</h3>
+        <p class="card-excerpt">Pune ki galliyon se reality TV tak — aur phir wapas apni terms pe. MC Stan ka safar aur woh cheezein jo usne kurbaan kiyein.</p>
+        <div class="card-meta"><span>May 28, 2025</span><span class="dot">◆</span><span>8 min read</span></div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">03</div>
+        <div class="card-tags"><span class="tag green">Album Review</span></div>
+        <h3 class="card-title">SEEDHE MAUT KI "NAYAAB" — IHH KA SABSE PERFECT ALBUM?</h3>
+        <p class="card-excerpt">Encore aur Calm ka jugalbandi — NAYAAB sirf ek album nahi, ek movement tha jo Delhi ke underground ko mainstream pe le aaya.</p>
+        <div class="card-meta"><span>May 22, 2025</span><span class="dot">◆</span><span>11 min read</span></div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">04</div>
+        <div class="card-tags"><span class="tag white">History</span></div>
+        <h3 class="card-title">DIVINE KA SAFAR: WOOZY SE INDIA'S HIP HOP ICON TAK</h3>
+        <p class="card-excerpt">Mumbai ki chhoti gali se Gully Boy ke set tak — DIVINE ne sirf rap nahi kiya, ek poori generation ko awaaz di.</p>
+        <div class="card-meta"><span>May 18, 2025</span><span class="dot">◆</span><span>9 min read</span></div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+      <a class="blog-card wide reveal" href="#">
+        <div class="card-num">05</div>
+        <div class="card-tags"><span class="tag green">Punjab Underground</span><span class="tag white">Deep Dive</span></div>
+        <h3 class="card-title">EPR: PUNJAB KA WOH RAPPER JISE BAAKI DUNIYA ABHI DISCOVER KAR RAHI HAI</h3>
+        <p class="card-excerpt">Jab duniya Punjabi music ko bhangra aur hits mein dhoond rahi thi, EPR apni ek alag hi duniya bana raha tha. Raw bars, real streets, zero compromise. Punjab ke underground scene se miliye.</p>
+        <div class="card-meta"><span>May 14, 2025</span><span class="dot">◆</span><span>12 min read</span><span class="dot">◆</span><span>Bebaak Team</span></div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+      <a class="blog-card reveal" href="#">
+        <div class="card-num">06</div>
+        <div class="card-tags"><span class="tag">Beats</span></div>
+        <h3 class="card-title">DESI BEATS KI ANATOMY — IHH PRODUCERS JO GAME CHANGE KAR RAHE HAIN</h3>
+        <p class="card-excerpt">Sez on the Beat se lekar Karan Kanchan tak — yeh producers IHH ki sound define kar rahe hain ek beat at a time.</p>
+        <div class="card-meta"><span>May 10, 2025</span><span class="dot">◆</span><span>7 min read</span></div>
+        <div class="card-read-overlay"><span class="card-read-label">Read →</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ARTIST MARQUEE -->
+  <div class="artist-strip">
+    <div class="artist-track">
+      <div class="artist-item hi">MC Stan</div><div class="artist-item">DIVINE</div>
+      <div class="artist-item hi">Seedhe Maut</div><div class="artist-item">Raftaar</div>
+      <div class="artist-item hi">Hanumankind</div><div class="artist-item">EPR</div>
+      <div class="artist-item hi">Prabh Deep</div><div class="artist-item">Ikka</div>
+      <div class="artist-item hi">Brodha V</div><div class="artist-item">Karma</div>
+      <div class="artist-item hi">Badshah</div><div class="artist-item">Naezy</div>
+      <div class="artist-item hi">MC Stan</div><div class="artist-item">DIVINE</div>
+      <div class="artist-item hi">Seedhe Maut</div><div class="artist-item">Raftaar</div>
+      <div class="artist-item hi">Hanumankind</div><div class="artist-item">EPR</div>
+      <div class="artist-item hi">Prabh Deep</div><div class="artist-item">Ikka</div>
+      <div class="artist-item hi">Brodha V</div><div class="artist-item">Karma</div>
+      <div class="artist-item hi">Badshah</div><div class="artist-item">Naezy</div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="section-header reveal">
+      <div>
+        <h2 class="section-title">EXPLORE <span class="saffron">TOPICS</span></h2>
+        <p class="section-sub">Desi scenes se shuru karo</p>
+      </div>
+    </div>
+    <div class="categories-grid">
+      <a class="cat-card featured-cat reveal" href="#"><div class="cat-icon">🎤</div><div class="cat-name">GULLY RAP</div><div class="cat-count">Mumbai · Pune · 16 Articles</div></a>
+      <a class="cat-card featured-cat reveal" href="#"><div class="cat-icon">🏙️</div><div class="cat-name">DELHI UNDERGROUND</div><div class="cat-count">Seedhe Maut · Prabh Deep · 12 Articles</div></a>
+      <a class="cat-card featured-cat reveal" href="#"><div class="cat-icon">🎵</div><div class="cat-name">PUNJABI TRAP</div><div class="cat-count">EPR · Ikka · 10 Articles</div></a>
+      <a class="cat-card featured-cat reveal" href="#"><div class="cat-icon">🌏</div><div class="cat-name">REGIONAL IHH</div><div class="cat-count">Tamil · Telugu · Kannada · 8 Articles</div></a>
+      <a class="cat-card reveal" href="#"><div class="cat-icon">🎹</div><div class="cat-name">DESI BEATS</div><div class="cat-count">Producers · 9 Articles</div></a>
+      <a class="cat-card reveal" href="#"><div class="cat-icon">💿</div><div class="cat-name">ALBUM REVIEWS</div><div class="cat-count">IHH Releases · 18 Articles</div></a>
+      <a class="cat-card reveal" href="#"><div class="cat-icon">🔥</div><div class="cat-name">BEEF & BATTLES</div><div class="cat-count">Desi Rap Wars · 7 Articles</div></a>
+      <a class="cat-card reveal" href="#"><div class="cat-icon">👟</div><div class="cat-name">STREET FASHION</div><div class="cat-count">IHH Style · 6 Articles</div></a>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- INTERNATIONAL -->
+  <section class="intl-strip" id="international">
+    <div class="intl-inner">
+      <div class="intl-label reveal">
+        <span class="intl-tag">Secondary Focus</span>
+        <h2 class="intl-heading">INTER&shy;NATIONAL HIP HOP</h2>
+        <p class="intl-desc">Duniya ki baat bhi zaroori hai. Global hip hop ki selected stories — jo IHH ko samajhne mein help karti hain.</p>
+      </div>
+      <div class="intl-grid reveal">
+        <a class="intl-card" href="#"><div class="card-tags"><span class="tag white">USA</span></div><div class="intl-card-title">KENDRICK VS DRAKE: WHAT THE BATTLE TOLD US ABOUT HIP HOP</div><div class="intl-card-meta">May 2025 · 8 min read</div></a>
+        <a class="intl-card" href="#"><div class="card-tags"><span class="tag white">UK</span></div><div class="intl-card-title">UK DRILL'S RISE — AND WHAT INDIA CAN LEARN FROM IT</div><div class="intl-card-meta">May 2025 · 6 min read</div></a>
+        <a class="intl-card" href="#"><div class="card-tags"><span class="tag white">USA</span></div><div class="intl-card-title">HOW METRO BOOMIN REINVENTED TRAP PRODUCTION</div><div class="intl-card-meta">May 2025 · 7 min read</div></a>
+        <a class="intl-card" href="#"><div class="card-tags"><span class="tag white">Global</span></div><div class="intl-card-title">HIP HOP AT 50: HOW THE BRONX CHANGED THE WORLD</div><div class="intl-card-meta">April 2025 · 10 min read</div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" id="manifesto">
+    <div class="manifesto-inner reveal">
+      <p class="manifesto-hindi">हम बोलते हैं जो दूसरे नहीं बोलते।</p>
+      <h2 class="manifesto-quote">IHH SIRF EK GENRE NAHI — <span class="saffron">YEH EK AWAAZ HAI.</span></h2>
+      <p class="manifesto-body">BEBAAK isliye bana kyunki Indian hip hop ko woh respect nahi mila jo usne deserve ki. Yahan hum unki baat karte hain jo galliyon se nikle, apni language mein rap kiya, apne sheher ki kahani sunai — aur duniya ne suna. Desi. Raw. Bebaak.</p>
+      <div class="manifesto-pills">
+        <span class="pill">Mumbai</span><span class="pill">Delhi</span>
+        <span class="pill">Punjab</span><span class="pill">Chennai</span>
+        <span class="pill">Hyderabad</span><span class="pill">Kolkata</span>
+        <span class="pill">Bengaluru</span><span class="pill">Pune</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="section" id="newsletter">
+    <div class="newsletter reveal">
+      <div>
+        <h2 class="nl-title">WEEKLY <span class="saffron">CIPHER.</span><br>DIRECT INBOX.</h2>
+        <p class="nl-sub">Har hafte ka best IHH content — naye drops, artist spotlights, beat breakdowns — seedha tumhare inbox mein. No spam, sirf real stuff.</p>
+      </div>
+      <div class="nl-form">
+        <input type="text" placeholder="Tumhara Naam" id="nlName" />
+        <input type="email" placeholder="Email Address" id="nlEmail" />
+        <button type="button" onclick="handleSubscribe()">Cipher Mein Aao →</button>
+        <p class="nl-note">Free forever. Unsubscribe kabhi bhi. No spam.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <a class="footer-logo" href="#">BEBAAK</a>
+        <p class="footer-tagline">India ka pehla dedicated IHH/DHH blog. Desi hip hop, raw aur unfiltered. Galliyon ki awaaz — web pe.</p>
+        <div class="footer-flag">
+          <div class="flag-stripe"></div>
+          <span class="footer-flag-text">Made in India</span>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">IHH Topics</p>
+        <ul class="footer-links">
+          <li><a href="#">Gully Rap</a></li>
+          <li><a href="#">Delhi Underground</a></li>
+          <li><a href="#">Punjabi Trap</a></li>
+          <li><a href="#">Regional IHH</a></li>
+          <li><a href="#">Desi Beats</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Explore</p>
+        <ul class="footer-links">
+          <li><a href="#">Latest Articles</a></li>
+          <li><a href="#">Album Reviews</a></li>
+          <li><a href="#">Artist Spotlights</a></li>
+          <li><a href="#">International</a></li>
+          <li><a href="#">About BEBAAK</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Connect</p>
+        <ul class="footer-links">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Twitter / X</a></li>
+          <li><a href="#">YouTube</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 BEBAAK. IHH · DHH · Culture. Desi. Raw. Bebaak.</p>
+      <div class="social-links">
+        <a href="#">IG</a><a href="#">X</a><a href="#">YT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Reading progress bar */
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progress-bar').style.width = (scrolled / total * 100) + '%';
+
+      /* Back to top */
+      const btn = document.getElementById('back-to-top');
+      if (scrolled > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+
+      /* Nav border */
+      document.getElementById('mainNav').style.borderBottomColor =
+        scrolled > 60 ? 'rgba(255,107,26,0.35)' : 'var(--border)';
+    });
+
+    /* Active nav on scroll */
+    const sections = ['blogs','categories','international','manifesto','newsletter'];
+    const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[data-section="${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(id => { const el = document.getElementById(id); if(el) sectionObserver.observe(el); });
+
+    /* Scroll reveal with stagger */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = Array.from(entry.target.parentNode?.children || []);
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), Math.min(idx * 75, 350));
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* Mobile menu */
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+    /* Search */
+    function openSearch() {
+      document.getElementById('search-overlay').classList.add('open');
+      setTimeout(() => document.getElementById('searchInput').focus(), 100);
+    }
+    function closeSearch() { document.getElementById('search-overlay').classList.remove('open'); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+
+    /* Newsletter */
+    function handleSubscribe() {
+      const name  = document.getElementById('nlName').value.trim();
+      const email = document.getElementById('nlEmail').value.trim();
+      if (!name || !email) { alert('Pehle apna naam aur email daal bhai!'); return; }
+      if (!email.includes('@')) { alert('Sahi email address daal yaar!'); return; }
+      const btn = document.querySelector('.nl-form button');
+      btn.textContent = '✅ Aa Gaye Cipher Mein!';
+      btn.style.background = '#138808'; btn.style.color = '#fff';
+      document.getElementById('nlName').value = '';
+      document.getElementById('nlEmail').value = '';
+      setTimeout(() => { btn.textContent = 'Cipher Mein Aao →'; btn.style.background = ''; btn.style.color = ''; }, 4000);
+    }
+  </script>
+</body>
+</html>
